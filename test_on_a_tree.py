@@ -1,28 +1,9 @@
-# from ising_on_a_tree import ising_model_energy
 import os
 from ising_on_a_tree import compute_transfer_matrix
 from ising_on_a_tree import compute_ground_state
 from ising_on_a_tree import read_input
 
 
-# # In this test, the spins and interactions are set to specific values, and the expected energy is calculated manually.
-# # The function ising_model_energy is then called with the specified inputs and the result is compared with the expected energy.
-# # If the actual energy is not equal to the expected energy, an error message will be printed.
-# def test_ising_model_energy():
-#     """
-#     Test the ising_model_energy function
-#     """
-
-#     spins = [1, -1, 1, 1]
-#     J = [1, 2, 3, 4]
-#     weights = [1, 1, 1, 1]
-#     expected_energy = -3
-#     actual_energy = ising_model_energy(spins, J, weights)
-#     assert expected_energy == actual_energy, f"Expected energy: {expected_energy}, but got {actual_energy}"
-
-# In this test, the interaction J is set to a specific value and the expected transfer matrix is calculated manually.
-# The function transfer_matrix is then called with the specified J, and the result is compared with the expected matrix.
-# If the actual matrix is not equal to the expected matrix, an error message will be printed.
 def test_transfer_matrix():
     """
     Test the transfer_matrix function
