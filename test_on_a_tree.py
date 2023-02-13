@@ -1,71 +1,75 @@
 import os
-from ising_on_a_tree import compute_transfer_matrix
-from ising_on_a_tree import compute_ground_state
-from ising_on_a_tree import read_input
+import numpy as np
+import random
+from ising_on_a_tree_dwave import *
+import pytest
 
+def test_compute_ground_state():
+    # Test input
+    h = {0: -1, 1: -1, 2: -1, 3: -1}
+    J = {(0, 1): 1, (1, 2): 1, (1, 3): 1}
 
-def test_transfer_matrix():
-    """
-    Test the transfer_matrix function
-    """
+    # Call the function to get the output
+    solution, energy = compute_ground_state(h, J)
+    solution_actual, energy_actual = compute_ground_state_exactsolver(h, J)
 
-    J = 1
-    expected_matrix = [[1, -J, J, -1], [J, 1, -J, J], [-J, J, 1, -J], [-1, -J, J, 1]]
-    actual_matrix = compute_transfer_matrix(J)
-    assert expected_matrix == actual_matrix, f"Expected matrix: {expected_matrix}, but got {actual_matrix}"
+    # Assert that the output is as expected
+    assert solution == solution_actual, f"Expected {solution_actual}, but got {solution}"
+    assert energy == energy_actual, f"Expected {energy_actual}, but got {energy}"
 
-# In this test, the interaction J is set to a specific value and the expected ground state is calculated manually.
-# The function ground_state is then called with the specified J, and the result is compared with the expected ground state.
-# If the actual ground state is not equal to the expected ground state, an error message will be printed.
-def test_ground_state():
-    """
-    Test the ground_state function
-    """
+def test_compute_ground_state_exactsolver():
+    # Test input
+    h = {0: -1, 1: -1, 2: -1, 3: -1}
+    J = {(0, 1): 1, (1, 2): 1, (1, 3): 1}
 
-    J = 1
-    expected_ground_state = [1, -1, 1, 1]
-    actual_ground_state = compute_ground_state(J)
-    assert expected_ground_state == actual_ground_state, f"Expected ground state: {expected_ground_state}, but got {actual_ground_state}"
+    # Call the function to get the output
+    solution, energy = compute_ground_state_exactsolver(h, J)
 
-# In this test, the file_path variable specifies the location of the input file,
-# and the expected_input variable contains the expected input values.
-# The input file is then written using the open function,
-# and the read_input function is called with the specified file_path.
-# The actual input is then compared with the expected input,
-# and if they are not equal, an error message is printed.
-# After the test is finished, the input file is automatically closed.
-def test_read_input():
-    # Test 1: Check the output when a valid input file is passed
-    file_path = 'sample_input.txt'
-    with open(file_path, 'w') as f:
-        f.write('0 1 1\n')
-        f.write('1 2 1\n')
-        f.write('1 3 1\n')
-        f.write('0 0 -1\n')
+    # Assert that the output is as expected
+    assert isinstance(solution, dict)
+    assert isinstance(energy, float)
+
+def test_compute_ground_state_hybridsampler():
+    # Test input
+    h = {0: -1, 1: -1, 2: -1, 3: -1}
+    J = {(0, 1): 1, (1, 2): 1, (1, 3): 1}
+
+    # Call the function to get the output
+    solution, energy = compute_ground_state_hybridsampler(h, J)
+
+    # Assert that the output is as expected
+    assert isinstance(solution, dict)
+    assert isinstance(energy, float)
+
+def test_read_input_file():
+    # Test input
+    filename = 'test_input.txt'
+
+    # Write the test file
+    with open(filename, 'w') as f:
+        f.write('0 0 1\n')
         f.write('1 1 -1\n')
-        f.write('2 2 -1\n')
-        f.write('3 3 -1\n')
+        f.write('2 3 1\n')
 
-    expected_output = ([[0, 1], [1, 2], [1, 3]], [1, 1, 1, -1, -1, -1, -1], [1, 1, 1], [-1, -1, -1, -1])
-    result = read_input(file_path)
-    assert result == expected_output, f"Expected {expected_output}, but got {result}"
+    # Call the function to get the output
+    h, J = read_input_file(filename)
 
-    # Test 2: Check the output when an empty file is passed
-    file_path = 'empty_input.txt'
-    with open(file_path, 'w') as f:
-        pass
+    # Assert that the output is as expected
+    assert isinstance(h, dict)
+    assert isinstance(J, dict)
+    assert h == {0: 1, 1: -1}
+    assert J == {(2, 3): 1}
 
-    expected_output = ([], [], [], [])
-    result = read_input(file_path)
-    assert result == expected_output, f"Expected {expected_output}, but got {result}"
+    # Remove the test file
+    os.remove(filename)
 
-    # Clean up
-    os.remove(file_path)
+def test_dict_to_string():
+    # Test input
+    d = {0: 1, 1: -1, 2: -1, 3: 1}
 
+    # Call the function to get the output
+    result = dict_to_string(d)
 
-if __name__ == '__main__':
-
-    test_read_input()
-    # test_ising_model_energy()
-    # test_transfer_matrix()
-    # test_ground_state()
+    # Assert that the output is as expected
+    assert isinstance(result, str)
+    assert result == '+--+'
