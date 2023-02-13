@@ -79,7 +79,7 @@ def compute_ground_state_hybridsampler(h, J):
 def compute_ground_state_simulated_annealing(h, J):
     """
     Compute the ground state of the Ising equation using simulated annealing.
-    This is an O(2^n) algorithm.
+    This is an O(2^n) algorithm. Can be used for testing small problems.
     """
 
     # Define the simulated annealing parameters
