@@ -5,9 +5,6 @@ import math
 from dwave.system import DWaveSampler, EmbeddingComposite
 from dwave.system import LeapHybridSampler
 
-# # Define the Ising equation
-# h = {0: -1, 1: -1, 2: -1, 3: -1}
-# J = {(0, 1): 1, (1, 2): 1, (1, 3): 1}
 
 # ######################################################################################
 def compute_ground_state(h, J):
@@ -160,6 +157,10 @@ def main():
 
     h, J = read_input_file(file_path)
 
+    # # Define the Ising equation, in case we bypass file reading
+    # h = {0: -1, 1: -1, 2: -1, 3: -1}
+    # J = {(0, 1): 1, (1, 2): 1, (1, 3): 1}
+
     solution, energy = compute_ground_state(h, J)
 
     # print(f"h = {h}")
@@ -167,6 +168,7 @@ def main():
     # print("Solution: ", solution)
     # print("Energy: ", energy)
 
+    # convert to ++++---++
     solution_spins = dict_to_string(solution)
 
     print(energy)
