@@ -12,7 +12,7 @@ def compute_ground_state(h, J):
         J (dict): dictionary with edges weights, J[(i,j)] is the weight of edge (i,j), i,j=0,1,...,n-1, n is the number of nodes, J[(i,j)] is an integer
     """
 
-    # Define the possible spin values for the parent and child nodes
+    # Define the possible spin values for a pair of nodes, parent and child
     # We'll compute the energy and spin values for all possible spin values
     parent_child_states = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 
@@ -154,7 +154,7 @@ def main():
 
     # get the path of this script
     script_path = os.path.dirname(os.path.realpath(__file__))
-    
+
     # get the path of the input file
     file_path = os.path.join(script_path, 'sample_input.txt')
 

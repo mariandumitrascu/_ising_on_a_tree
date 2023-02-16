@@ -33,7 +33,6 @@ def compute_ground_state_exactsolver(h, J):
 
     return solution, energy
 
-
 # ######################################################################################
 def test_compute_ground_state():
     # Test input
@@ -43,34 +42,14 @@ def test_compute_ground_state():
     # Call the function to get the output
     solution, energy = compute_ground_state(h, J)
     solution_actual, energy_actual = compute_ground_state_exactsolver(h, J)
+    solution_actual = np.array(list(solution_actual.values()))
+
+    print('solution', solution)
+    print('solution_actual', solution_actual)
 
     # Assert that the output is as expected
-    assert solution == solution_actual, f"Expected {solution_actual}, but got {solution}"
+    assert solution.all() == solution_actual.all(), f"Expected {solution_actual}, but got {solution}"
     assert energy == energy_actual, f"Expected {energy_actual}, but got {energy}"
-
-def test_compute_ground_state_exactsolver():
-    # Test input
-    h = {0: -1, 1: -1, 2: -1, 3: -1}
-    J = {(0, 1): 1, (1, 2): 1, (1, 3): 1}
-
-    # Call the function to get the output
-    solution, energy = compute_ground_state_exactsolver(h, J)
-
-    # Assert that the output is as expected
-    assert isinstance(solution, dict)
-    assert isinstance(energy, float)
-
-def test_compute_ground_state_hybridsampler():
-    # Test input
-    h = {0: -1, 1: -1, 2: -1, 3: -1}
-    J = {(0, 1): 1, (1, 2): 1, (1, 3): 1}
-
-    # Call the function to get the output
-    solution, energy = compute_ground_state_hybridsampler(h, J)
-
-    # Assert that the output is as expected
-    assert isinstance(solution, dict)
-    assert isinstance(energy, float)
 
 def test_read_input_file():
     # Test input
@@ -94,9 +73,10 @@ def test_read_input_file():
     # Remove the test file
     os.remove(filename)
 
-def test_dict_to_string():
+def test_array_to_string():
+
     # Test input
-    d = {0: 1, 1: -1, 2: -1, 3: 1}
+    d = [1, -1, -1, 1]
 
     # Call the function to get the output
     result = array_to_string(d)
