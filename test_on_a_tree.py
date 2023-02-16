@@ -1,9 +1,6 @@
-import math
 import os
-import random
-
 import numpy as np
-import pytest
+
 from ising_on_a_tree import *
 
 
