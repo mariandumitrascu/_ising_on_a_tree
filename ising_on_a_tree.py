@@ -41,6 +41,7 @@ def compute_ground_state(h, J):
 
         # Initialize the partial energy and spin values for the current node
         energy = {1: h[node], -1: -h[node]}
+
         # Initialize the spin values for the current node
         # spin[s] is the spin value for the current node with spin s, s=1,-1
         spin = {1: np.zeros(n), -1: np.zeros(n)}
@@ -94,8 +95,10 @@ def compute_ground_state(h, J):
 
     # Find the minimum energy and the corresponding spin value for the root node
     min_energy = min(root_energy.values())
+
     # Find the index of the minimum energy value
     min_spin_ix = min(root_energy, key=root_energy.get)
+    
     # Find the spin value for the root node with the minimum energy
     min_spin = root_spin[min_spin_ix]
 
