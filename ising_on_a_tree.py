@@ -4,7 +4,7 @@ import numpy as np
 # ######################################################################################
 def compute_ground_state(h, J):
     """
-    Compute the ground state of the Ising equation using the D-Wave system.
+    Compute the ground state of the Ising model on a tree.
     This is O(n log n) time complex algorithm and is useful for larger problems.
 
     Args:
