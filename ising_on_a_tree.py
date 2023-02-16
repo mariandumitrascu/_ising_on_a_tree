@@ -98,7 +98,7 @@ def compute_ground_state(h, J):
 
     # Find the index of the minimum energy value
     min_spin_ix = min(root_energy, key=root_energy.get)
-    
+
     # Find the spin value for the root node with the minimum energy
     min_spin = root_spin[min_spin_ix]
 
@@ -112,6 +112,7 @@ def read_input_file(filename):
     Args:
         filename (str): name of the input file
     """
+
     h = {}
     J = {}
 
@@ -153,6 +154,7 @@ def main():
 
     # get the path of this script
     script_path = os.path.dirname(os.path.realpath(__file__))
+    
     # get the path of the input file
     file_path = os.path.join(script_path, 'sample_input.txt')
 
